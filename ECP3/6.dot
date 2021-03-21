@@ -1,0 +1,18 @@
+digraph {
+graph [ordering="out"];
+node0[label="Tecido"];
+node1[label="A"];
+node2[label="N"];
+node0->node1[label="P(A) = 70%"];
+node0->node2[label="P(N) = 30%"];
+node3[label="P(F∩A) = 1,4%"];
+node4[label="P(F'∩A) = 68,6%"];
+node1->node3[label="P(F|A) = 2%"];
+node1->node4[label="P(F'|A) = 98%"];
+node5[label="P(F∩N) = 0,9%"];
+node6[label="P(F'∩N) = 29,1%"];
+node2->node5[label="P(F|N) = 3%"];
+node2->node6[label="P(F'|N) = 97%"];
+
+
+}

@@ -1,0 +1,16 @@
+digraph {
+graph [ordering="out"];
+node0[label="Máquina"];
+node1[label="Elétrica"];
+node2[label="Manual"];
+node0->node1[label="P(E) = 60%"];
+node0->node2[label="P(M) = 40%"];
+node3[label="P(E∩N) = 40%"];
+node4[label="P(E∩U) = 20%"];
+node1->node3[label="P(N|E) = 66,66%"];
+node1->node4[label="P(U|E) = 33,33%"];
+node5[label="P(M∩N) = 30%"];
+node6[label="P(M∩U) = 10%"];
+node2->node5[label="P(N|M) = 75%"];
+node2->node6[label="P(U|M) = 25%"];
+}

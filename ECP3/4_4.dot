@@ -1,0 +1,16 @@
+digraph {
+graph [ordering="out"];
+node0[label="Máquina"];
+node1[label="Nova"];
+node2[label="Usada"];
+node0->node1[label="P(N) = 70%"];
+node0->node2[label="P(U) = 30%"];
+node3[label="P(N∩E) = 40%"];
+node4[label="P(N∩M) = 30%"];
+node1->node3[label="P(E|N) = 57,14%"];
+node1->node4[label="P(M|N) = 42,86%"];
+node5[label="P(U∩E) = 20%"];
+node6[label="P(U∩M) = 10%"];
+node2->node5[label="P(E|U) = 66,66%"];
+node2->node6[label="P(M|U) = 33,33%"];
+}

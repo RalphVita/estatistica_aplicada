@@ -1,0 +1,17 @@
+digraph {
+graph [ordering="out"];
+node0[label="Status"];
+node1[label="GS"];
+node2[label="MS"];
+node3[label="R"];
+node0->node1[label="P(GS) = 40%"];
+node0->node2[label="P(MS) = 35%"];
+node0->node3[label="P(R) = 25%"];
+
+node4[label="P(GS∩BR) = 38%"];
+node5[label="P(MS∩BR) = 21%"];
+node6[label="P(R∩BR) = 2,5%"];
+node1->node4[label="P(BR|GS) = 95%"];
+node2->node5[label="P(BR|MS) = 60%"];
+node3->node6[label="P(BR|R) = 10%"];
+}
