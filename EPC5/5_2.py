@@ -27,9 +27,9 @@ fig, ax = plt.subplots(1, 1)
 ax.grid(which='major', alpha=0.3)
 #ax.legend(['n = 10\np = 0.5'],loc=1)
 
-ax.set_title('Histograma e pdf de Y = X²')
-ax.set_ylabel('f(x)')
-ax.set_xlabel('x')
+ax.set_title('Histograma de Y = X² e chi2(x,1)')
+ax.set_ylabel('f(y)')
+ax.set_xlabel('y = x²')
 
 ##### Normal ######
 mu = 0
@@ -37,15 +37,18 @@ variance = 1
 print(mu,variance)
 sigma = math.sqrt(variance)
 #x = np.random.normal(size=100)
-x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)**2
-ax.plot(x, stats.norm.pdf(x, mu, sigma))
+x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
+df=1
+x = np.linspace(stats.chi2.ppf(0.35, df),stats.chi2.ppf(0.99, df), 1000)
+print(x)
+ax.plot(x, stats.chi2.pdf(x,df))
 #ax.plot(x, stats.norm.cdf(x, mu, sigma))
 
 x = np.random.normal(size=1000)**2
-ax.hist(x, weights=np.zeros_like(x) + 1. / x.size)
+ax.hist(x, weights=np.zeros_like(x) + 1. / x.size, edgecolor="black")#, cumulative=True)
 #ax.hist(x)
 
-ax.legend(['Normal', 'Histograma'],loc=1)
+ax.legend(['chi2(x,1)', 'Histograma'],loc=1)
 
 
 

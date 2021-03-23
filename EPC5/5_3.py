@@ -38,19 +38,27 @@ print(mu,variance)
 sigma = math.sqrt(variance)
 #x = np.random.normal(size=100)
 x = np.linspace(mu - 3*sigma, mu + 3*sigma, 1000)
-ax.plot(x, stats.norm.pdf(x, mu, sigma))
+# ax.plot(x, stats.norm.pdf(x, mu, sigma))
 
-x = np.random.normal(size=1000)
-ax.hist(x, weights=np.zeros_like(x) + 1. / x.size)
-#ax.hist(x, density=True)#, alpha=0.2)
-#ax.hist(x)
+# x = np.random.normal(size=1000)
+# ax.hist(x, weights=np.zeros_like(x) + 1. / x.size,edgecolor="black")
+# #ax.hist(x, density=True)#, alpha=0.2)
+# #ax.hist(x)
 
-ax.legend(['Normal', 'Histograma'],loc=1)
+# ax.legend(['Normal', 'Histograma'],loc=1)
 
+print(stats.norm.cdf(2, mu, sigma))
+print(stats.norm.cdf(-2, mu, sigma))
+Y = stats.norm.cdf(2, mu, sigma)-stats.norm.cdf(-2, mu, sigma)
+print(Y)
 
+x = np.linspace(stats.chi2.ppf(0.35, 1),stats.chi2.ppf(0.99, 1), 1000)
+print(x)
+for y in x:
+    if stats.chi2.cdf(y,1) > Y:
+        print(y)
 
-
-plt.show()
+#plt.show()
 
 
 
