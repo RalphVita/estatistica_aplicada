@@ -54,7 +54,7 @@ ax.set_ylabel('Erro médio quadrático')
 ax.set_xlabel('n')
 ax.grid(which='major', alpha=0.3)
 
-#plt.xticks(r_values)
+ax.set_xticks([5,8,11,14,17,20])
 
 plt.show()
 

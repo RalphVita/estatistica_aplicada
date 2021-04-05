@@ -17,4 +17,6 @@ for n in range(1,11):
 plt.legend()
 plt.title('Efeito do número de graus de liberdade')
 plt.grid(alpha=0.2)
+plt.ylabel('f(x)')
+plt.xlabel('x')
 plt.show()
