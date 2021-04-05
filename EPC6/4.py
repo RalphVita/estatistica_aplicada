@@ -4,6 +4,7 @@ import random
 import scipy.stats  
 from statistics import NormalDist
 import json
+import scipy.stats as stats
 
 import data
 import y
@@ -11,72 +12,55 @@ x = np.array(data.x)
 
 a = 200
 b = 300
-# x = np.random.uniform(a,b,1000)
-
-
-# with open('data.json', 'w') as outfile:
-#     json.dump(json.dumps(x.tolist()), outfile)
-
-
-# def confidence_interval(data, confidence=0.95):
-#     dist = NormalDist.from_samples(data)
-#     z = NormalDist().inv_cdf((1 + confidence) / 2.)
-#     h = x.std() * z / ((len(data) - 1) ** .5)
-#     return dist.var - h, dist.var + h
-
 
 
 fig, ax = plt.subplots(2, 1)
 
 ax[1].set_title('Histograma')
 #ax[0].plot(x)
-
+print(x.var)
 std = x.std()
 x_ = []
 y1= []
 y2= []
-variacias = []
-for i in range(1,51):
+variancias = []
+n=20
+for i in range(50):
+    #20 Amostras aleatórias
     r1 = np.random.choice(x, 20)
-    var = r1.var()
-    variacias.append(var)
-    #conf_int = scipy.stats.norm.interval(0.05, loc=mean_, scale=std) 
-    
-    #conf_int = confidence_interval(r1,0.95)
+    #Variância das amostras
+    s2 = r1.var()   
 
-    conf_int = (scipy.stats.norm.interval(0.05, loc=var, scale=var))
+    #Calcula intervalos
+    var_min = (n-1)*s2/stats.chi2.ppf(0.05, n-1)
+    var_max = (n-1)*s2/stats.chi2.ppf(1-0.05, n-1)
 
     x_.append(i)
-    y1.append(conf_int[0])
-    y2.append(conf_int[1])
+    y1.append(var_min)
+    y2.append(var_max)
+
+    variancias.append(s2)
 
 
 
+#Restringe ao intervalos de 300 a 1300 => Em torno da variância
+x2 = np.array([i for i in range(300,1300,1)])
 
+#Plota chi2 teórica, para média e desvio de X
+ax[1].plot(x2, scipy.stats.chi2.pdf((x2-250)/std, 19), label= 'chi2(x,19) teórica')
 
-ax[1].hist(variacias, weights=np.zeros_like(variacias) + 1. / len(variacias), cumulative=False,
+#Plota Histograma
+ax[1].hist(variancias, bins = 20, weights=np.zeros_like(variancias) + 1. / len(variancias), cumulative=False,
         label='Histograma')
 
-# n = 20
-# mu = np.mean(variacias)
-# sigma = np.std(x)/math.sqrt(n)
-# x_ = [i for i in range(350,1050,1)]
-# ax[1].plot(x_,scipy.stats.norm.cdf(x_, mu, sigma), label= 'cdf teórica')
 
-#y1, y2 = y.y1, y.y2
-
-# with open('y1.json', 'w') as outfile:
-#     json.dump(json.dumps(y1), outfile)
-
-# with open('y2.json', 'w') as outfile:
-#     json.dump(json.dumps(y2), outfile)
 
 
 ax[0].set_title('Intervalos da variância')
 
-ax[0].set_ylim(300, 1300)
+#ax[0].set_ylim(300, 1300)
 
-
+plt.legend()
 ax[0].plot(x_, y2, 'ro', ms=5, mec='r')
 ax[0].vlines(x_, 0, y2, colors='r', lw=2)
 

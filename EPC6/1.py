@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import random
 import scipy.stats  
 from statistics import NormalDist
+from scipy.stats import norm
 import json
 
 import data
@@ -19,11 +20,11 @@ b = 300
 #     json.dump(json.dumps(x.tolist()), outfile)
 
 
-def confidence_interval(data, confidence=0.95):
-    dist = NormalDist.from_samples(data)
-    z = NormalDist().inv_cdf((1 + confidence) / 2.)
+def intervalo_confianca(amostra, confidence=0.95):
+    media = np.mean(data)
+    z = norm.ppf((1+confidence)/2.)
     h = x.std() * z / ((len(data) - 1) ** .5)
-    return dist.mean - h, dist.mean + h
+    return media - h, media + h
 
 
 
@@ -36,18 +37,28 @@ std = x.std()
 x_ = []
 y1= []
 y2= []
-for i in range(1,51):
-    r1 = np.random.choice(x, 20)
-    mean_ = r1.mean()
-    
-    #conf_int = scipy.stats.norm.interval(0.05, loc=mean_, scale=std) 
-    conf_int = confidence_interval(r1,0.95)
 
-    
+alfa = 0.05
+confidence = 1-alfa
+#Z para o intervalo de confiaça pedido
+z = norm.ppf((1+confidence)/2.) # = 
+std = x.std()
+print(std)
+h = std   / (20 ** .5)
+print(h)
+
+for i in range(50):
+    #20 Amostras aleatórias
+    r1 = np.random.choice(x, 20) 
+    #Média das amostras
+    media = r1.mean() 
+
+    #Calcula intervalos
+    µ_min, µ_max = media - 12.65, media + 12.65
 
     x_.append(i)
-    y1.append(conf_int[0])
-    y2.append(conf_int[1])
+    y1.append(µ_min)
+    y2.append(µ_max)
 
 y1, y2 = y.y1, y.y2
 
