@@ -6,7 +6,7 @@ from scipy import stats
 import math
 from scipy.stats import t
 
-fig, ax = plt.subplots(3,1)
+fig, ax = plt.subplots(4,1)
 
 #Ler X e Y
 x, y = np.loadtxt('epc10dat.txt', delimiter='   ', usecols=(0, 1), unpack=True)
@@ -28,16 +28,16 @@ print('B1:',b1)
 
 
 #Modelo vs Teste
-ax[0].plot(X_test,prev)
-ax[0].scatter(X_test,y_test)
+ax[0].plot(X_test,prev, label = 'Modelo', color='orange')
+ax[0].scatter(X_test,y_test, label = 'Real')
 ax[0].set_title('Modelo vs Dados de teste')
 ax[0].set_ylabel('y_test')
 ax[0].set_xlabel('X_test')
-
+ax[0].legend()
 
 
 ax[1].scatter(X_test,residuos)
-ax[1].axhline(0)
+ax[1].axhline(0, color='orange')
 ax[1].set_title('Resíduos')
 ax[1].set_xlabel('X_test')
 
@@ -85,6 +85,25 @@ ax[2].set_title('Resíduos')
 ax[2].plot(x, stats.norm.pdf(x, mu, sigma), label= 'PDF')
 ax[2].hist(residuos, density=True, bins=20, label='Histograma')
 ax[2].grid()
+
+
+
+
+
+# Correlação cruzada
+r = []
+I = []
+for i in range(-len(residuos)+1,len(residuos),1):
+    slope, intercept, r_value, p_value, std_err = stats.linregress(residuos,np.roll(residuos,-i))
+    r.append(r_value)
+    I.append(i)
+
+ax[3].plot(I,r)
+
+ax[3].set_ylabel('R²')
+ax[3].set_xlabel('deslocamento')
+ax[3].grid()
+ax[3].set_title('Correlação cruzada dos resíduos')
 
 
 
